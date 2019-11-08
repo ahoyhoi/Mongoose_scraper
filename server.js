@@ -30,13 +30,18 @@ app.get("/scrape", function(req, res) {
     let $ = cheerio.load(response.data);
 
     $("#stream-panel ol li div div a").each(function(i, element) {
-      let result = {};
+      // let result = {};
 
-      result.title = $(this).children("h2").text();
-      result.link = $(this).attr("href");
-      result.summary = $(this).children("p").text();
+      // result.title = $(this).children("h2").text();
+      // result.link = $(this).attr("href");
+      // result.summary = $(this).children("p").text();
 
-      db.Article.create(result)
+      db.Article.create({
+      title: $(this).children("h2").text(),
+      link:  $(this).attr("href"),
+      summary:  $(this).children("p").text()
+      }
+      )
         .then(function(dbArticle) {
           console.log(dbArticle);
         })
